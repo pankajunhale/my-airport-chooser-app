@@ -99,13 +99,10 @@ const findDisplayConfig = (term, pageIndex, pageSize) => {
 // }
 
 const setSelectedAirport = (item) => {
-    debugger;
     return dispatch => {
         dispatch(mapSelectedAirportSuccess({ data : item }))
     }
-  
 }
-
 
 const mapSelectedAirportSuccess = (data) => ({
     type: SET_SELECTED_AIRPORT,

@@ -1,5 +1,12 @@
 # my-airport-chooser-app
-Airport Selector React Component
+Airport Selector React Component, In this project data 
+# Step to run the Project
+
+1. Clone the porject using command, git clone https://github.com/pankajunhale/my-airport-chooser-app.git
+
+2. Install the node module using command, npm install
+
+3. Run the project using command, npm start
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

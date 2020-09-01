@@ -3,7 +3,8 @@ import {
     FETCH_ALL_AIRPORTS_SUCCESS,
     LOADING_AIRPORTS,
     FILTER_AIRPORTS_SUCCESS,
-    LOAD_MORE_SUCCESS
+    LOAD_MORE_SUCCESS,
+    SET_SELECTED_AIRPORT
 } from '../actions/airport.selector.action.types';
 
 const INITIAL_STATE = {
@@ -40,7 +41,8 @@ export default function airportChooserDemoReducer(state = INITIAL_STATE, action)
                 isLoadingAirports: false,
                 isSuccessfullyFetched: true,
                 airportFilterConfig: Object.assign({}, action.payload.airportFilterConfig),
-                totalRecords: action.payload.totalRecords
+                totalRecords: action.payload.totalRecords,
+                selectedAirport: null,
             }
         case FETCH_ALL_AIRPORTS_ERROR:
             return {
@@ -60,6 +62,12 @@ export default function airportChooserDemoReducer(state = INITIAL_STATE, action)
                 airportFilteredData: [...state.airportFilteredData,...action.payload.data],
                 airportFilterConfig: Object.assign({}, action.payload.airportFilterConfig),
                 totalRecords: action.payload.totalRecords
+            }
+        case SET_SELECTED_AIRPORT:
+            debugger;
+            return {
+                ...state,
+                selectedAirport: Object.assign({}, action.payload.data),
             }
         default:
             return state;

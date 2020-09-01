@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { fetchAllAirports, filterAirports, loadMoreAirports } from '../../actions/airport.selector.actions';
+import { fetchAllAirports, filterAirports, loadMoreAirports, setSelectedAirport } from '../../actions/airport.selector.actions';
 import DropdownWidget from '../../widget/dropdown';
 import TextBoxWidget from '../../widget/textbox';
 import ButtonWidget from "../../widget/button";
@@ -28,6 +28,11 @@ class AirportChooserContainerComponent extends Component {
         this.props.loadMoreAirports(config.searchTerm, pageIndex, config.pageSize, this.props.airportData);
     }
 
+    displaySelectedItem = (item) => {
+        console.log(item);
+        this.props.bindSelectedAirport(item);
+    }
+
     renderDropdown = () => {
         let dropdownButton;
         if (this.props.isLoadingAirports) {
@@ -37,8 +42,8 @@ class AirportChooserContainerComponent extends Component {
                 const loadMoreDiv = <div className="load-more-link" onClick={this.handleLoadMore}>Load more</div>
                 let loadmore = (this.props.totalRecords > ((this.props.airportFilterConfig.pageSize * this.props.airportFilterConfig.pageIndex) + this.props.airportFilterConfig.pageSize)) ? loadMoreDiv : null;
                 dropdownButton = <div>
-                    <TextBoxWidget onFilterChange={this.handleFilterAirportChange} placeholderName="Enter name or city or country..."></TextBoxWidget>
-                    <DropdownWidget myClassName="airport-list-item" data={this.props.airportFilteredData}></DropdownWidget>
+                    <TextBoxWidget onFilterChange={this.handleFilterAirportChange} placeholderName="Enter name, city or country..."></TextBoxWidget>
+                    <DropdownWidget onItemSelect={this.displaySelectedItem} myClassName="airport-list-item" data={this.props.airportFilteredData}></DropdownWidget>
                     {loadmore}
                 </div>;
             } else {
@@ -48,12 +53,26 @@ class AirportChooserContainerComponent extends Component {
         return dropdownButton;
     }
 
+    rednerSelectedAirport = () => {
+        let airportInfo = null;
+        if(this.props.selectedAirport) {
+            airportInfo = <div><label>{this.props.selectedAirport.name}</label></div>
+        }
+        else{
+            airportInfo = <div><label className="airport-not-selected-label">Airport not selected...</label></div> 
+        }
+        return airportInfo;
+    }
+
     render() {
         return (
             <React.Fragment>
                 <div className="row">
-                    <div className="col-12">
-                        <h1>React Component Demo</h1>
+                    <div className="col-8">
+                        <h1>React Component Demo</h1>                        
+                    </div>
+                    <div className="col-4 selected-ariport-container">
+                           {this.rednerSelectedAirport()}          
                     </div>
                 </div>
                 <div className="row">
@@ -93,6 +112,9 @@ const mapDispatchToProps = dispatch => {
         },
         loadMoreAirports: (term, pageIndex, pageSize, allAirports) => {
             dispatch(loadMoreAirports(term, pageIndex, pageSize, allAirports));
+        },
+        bindSelectedAirport: (selectedItem) => {
+            dispatch(setSelectedAirport(selectedItem));
         }
     };
 };

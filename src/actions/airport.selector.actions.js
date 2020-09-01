@@ -3,7 +3,8 @@ import {
     FETCH_ALL_AIRPORTS_SUCCESS,
     LOADING_AIRPORTS,
     FILTER_AIRPORTS_SUCCESS,
-    LOAD_MORE_SUCCESS
+    LOAD_MORE_SUCCESS,
+    SET_SELECTED_AIRPORT
 } from './airport.selector.action.types';
 import { findAll, filterAirportData , findTotalRecords } from '../services/airport.service';
 
@@ -70,7 +71,6 @@ const fetchLoadMoreSuccess = (data) => ({
     }
 });
 
-
 const fetchAllError = (error) => ({
     type: FETCH_ALL_AIRPORTS_ERROR,
     payload: {
@@ -98,8 +98,25 @@ const findDisplayConfig = (term, pageIndex, pageSize) => {
 //             airportFilterConfig : findDisplayConfig(term, pageIndex, pageSize) }
 // }
 
+const setSelectedAirport = (item) => {
+    debugger;
+    return dispatch => {
+        dispatch(mapSelectedAirportSuccess({ data : item }))
+    }
+  
+}
+
+
+const mapSelectedAirportSuccess = (data) => ({
+    type: SET_SELECTED_AIRPORT,
+    payload: {
+        ...data
+    }
+});
+
 export {
     fetchAllAirports,
     filterAirports,
-    loadMoreAirports
+    loadMoreAirports,
+    setSelectedAirport
 }
